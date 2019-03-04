@@ -6,10 +6,9 @@ import os
 from eke import spimage_tools
 import h5py
 
-index = int(sys.argv[1])
-run = int(sys.argv[2])
-INPUT_DIR = sys.argv[3]
-OUTPUT_DIR = sys.argv[4]
+#particle_id = str(sys.argv[1])
+INPUT_DIR = sys.argv[1]
+OUTPUT_DIR = sys.argv[2]
 numpy.random.seed()
 spimage.sp_srand(numpy.random.randint(1e6))
 
@@ -18,7 +17,7 @@ NUMBER_OF_REFINE_ITERATIONS = 1000
 
 # Amplitudes
 diffraction_pattern_file = os.path.join(
-    INPUT_DIR, 'p{0:06d}_detected_intensity.h5'.format(index))
+    INPUT_DIR, 'particle_detected_intensity.h5')
 diffraction_pattern_raw = spimage.sp_image_read(diffraction_pattern_file, 0)
 amplitudes = spimage.sp_image_shift(diffraction_pattern_raw)
 amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image))
@@ -26,7 +25,7 @@ amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image))
 #amplitudes.phased = 0
 #amplitudes.shifted = 1
 
-support_file = os.path.join(INPUT_DIR, 'p{0:06d}_support.h5'.format(index))
+support_file = os.path.join(INPUT_DIR, 'particle_support.h5')
 support_raw = spimage.sp_image_read(support_file, 0)
 support = spimage.sp_image_shift(support_raw)
 
@@ -66,17 +65,17 @@ model = spimage.sp_phaser_model(phaser)
 support = spimage.sp_phaser_support(phaser)
 fmodel = spimage.sp_phaser_fmodel(phaser)
 spimage.sp_image_write(
-    model, OUTPUT_DIR + "index{0:06d}".format(index)+"run{0:06d}model.h5".format(run), 0)
+    model, OUTPUT_DIR + "model.h5", 0)
 spimage.sp_image_write(support, OUTPUT_DIR +
-                       "index{0:06d}".format(index)+"run{0:06d}support.h5".format(run), 0)
+                       "support.h5", 0)
 spimage.sp_image_write(
-    fmodel, OUTPUT_DIR + "index{0:06d}".format(index)+"run{0:06d}fmodel.h5".format(run), 0)
+    fmodel, OUTPUT_DIR + "fmodel.h5", 0)
 
 ereal = spimage.sp_phaser_ereal(phaser)
 efourier = spimage.sp_phaser_efourier(phaser)
 
 filename = OUTPUT_DIR + \
-    'index{0:06d}'.format(index) + 'run{0:06d}error.h5'.format(run)
+    'error.h5'
 
 with h5py.File(filename, 'w') as file_handle:
     file_handle.create_dataset('ereal', data=ereal)
