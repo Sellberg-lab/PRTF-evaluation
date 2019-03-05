@@ -5,6 +5,7 @@ import numpy as np
 import spimage
 import matplotlib.pyplot as plt
 import sys
+import h5py
 
 # experimental constants
 pattern_size_pixels = 1024
@@ -42,12 +43,17 @@ shell_functions.mkdir_p(output_dir)
 file1 = output_dir + '/particle_detected_instensity.h5'
 file2 = output_dir + '/particle_diffracted_wave.h5'
 file3 = output_dir + '/particle_support.h5'
-file4 = output_dir + '/particle_shape.h5'
+file4 = output_dir + '/particle_shape.hdf5'
 
 spimage.sp_image_write(img_detected_intensity, file1, 0)
 spimage.sp_image_write(img_diffracted_wave, file2, 0)
 spimage.sp_image_write(img_support, file3, 0)
-spimage.sp_image_write(particle.particle, file4, 0)
+
+with h5py.File(file4, "w") as f:
+    dset = f.create_dataset("particle_matrix", data=particle.particle)
+    dset.attrs['particle_size'] = particle_size
+    dset.attrs['feature_size'] = feature_size
+    dset.attrs['array_size'] = array_size
 
 image = np.fft.fftshift(np.fft.fft2(np.fft.fftshift(diffracted_wave)))
 plt.imsave(output_dir + '/p_img.png', abs(image))
