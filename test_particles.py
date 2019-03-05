@@ -40,7 +40,7 @@ img_support = spimage_tools.image_from_array(support)
 output_dir = output_dir + 'particle_' + particle_id
 shell_functions.mkdir_p(output_dir)
 
-file1 = output_dir + '/particle_detected_instensity.h5'
+file1 = output_dir + '/particle_detected_intensity.h5'
 file2 = output_dir + '/particle_diffracted_wave.h5'
 file3 = output_dir + '/particle_support.h5'
 file4 = output_dir + '/particle_shape.hdf5'
