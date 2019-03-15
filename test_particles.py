@@ -14,13 +14,13 @@ detector_pixel_size = 75e-6
 wavelength = conversions.ev_to_m(1100)
 
 # particle constants
-particle_size = 200
-feature_size = 40
+particle_size = 100
+feature_size = 20
 array_size = particle_size + 5
 n_photons = 2500000
 
 # CHANGE FOR EACH PARTICLE RUN
-particle_id = "001"
+particle_id = "002"
 
 # command line arguments
 output_dir = sys.argv[1]
