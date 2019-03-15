@@ -6,17 +6,14 @@ import os
 from eke import spimage_tools
 import h5py
 
-# particle_id = str(sys.argv[1])
-INPUT_DIR = sys.argv[1]
-OUTPUT_DIR = sys.argv[2]
+run_id = str(sys.argv[1])
+INPUT_DIR = sys.argv[2]
+OUTPUT_DIR = sys.argv[3]
 numpy.random.seed()
 spimage.sp_srand(numpy.random.randint(1e6))
 
-NUMBER_OF_ITERATIONS = 1000
-NUMBER_OF_REFINE_ITERATIONS = 100
-
-#NUMBER_OF_ITERATIONS = 10000
-#NUMBER_OF_REFINE_ITERATIONS = 1000
+NUMBER_OF_ITERATIONS = 10000
+NUMBER_OF_REFINE_ITERATIONS = 1000
 
 # Amplitudes
 diffraction_pattern_file = os.path.join(
@@ -38,7 +35,7 @@ for i in range(len(amp_abs)):
 amplitudes.image[:] = amp_abs.reshape([adim, adim])
 # End hack
 
-# amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image))
+# amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image)) # not working
 # amplitudes.scaled = 1
 # amplitudes.phased = 0
 # amplitudes.shifted = 1
@@ -84,16 +81,16 @@ model = spimage.sp_phaser_model(phaser)
 support = spimage.sp_phaser_support(phaser)
 fmodel = spimage.sp_phaser_fmodel(phaser)
 spimage.sp_image_write(
-    model, OUTPUT_DIR + "model.h5", 0)
+    model, OUTPUT_DIR + "run_{}_model.h5".format(run_id), 0)
 spimage.sp_image_write(support, OUTPUT_DIR +
-                       "support.h5", 0)
+                       "run_{}_support.h5".format(run_id), 0)
 spimage.sp_image_write(
-    fmodel, OUTPUT_DIR + "fmodel.h5", 0)
+    fmodel, OUTPUT_DIR + "run_{}_fmodel.h5".format(run_id), 0)
 
 ereal = spimage.sp_phaser_ereal(phaser)
 efourier = spimage.sp_phaser_efourier(phaser)
 
-filename = OUTPUT_DIR + '/error.h5'
+filename = OUTPUT_DIR + '/run_{}_error.h5'.format(run_id)
 
 with h5py.File(filename, "w") as file_handle:
     file_handle.create_dataset('ereal', data=ereal)
