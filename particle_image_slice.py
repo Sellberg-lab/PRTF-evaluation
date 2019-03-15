@@ -47,4 +47,5 @@ for x in range(len(dset[:][0][0])):
 plt.scatter(xlist, ylist, c=clist)
 plt.axis('equal')
 # plt.show()
-plt.savefig(input_dir + 'particle_slice.png')
+plt.savefig(
+    input_dir + 'particle_slice_ps{}_fs{}.png'.format(particle_size, feature_size))
