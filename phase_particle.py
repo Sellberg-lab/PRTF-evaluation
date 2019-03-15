@@ -6,28 +6,47 @@ import os
 from eke import spimage_tools
 import h5py
 
-#particle_id = str(sys.argv[1])
+# particle_id = str(sys.argv[1])
 INPUT_DIR = sys.argv[1]
 OUTPUT_DIR = sys.argv[2]
 numpy.random.seed()
 spimage.sp_srand(numpy.random.randint(1e6))
 
-NUMBER_OF_ITERATIONS = 10000
-NUMBER_OF_REFINE_ITERATIONS = 1000
+NUMBER_OF_ITERATIONS = 1000
+NUMBER_OF_REFINE_ITERATIONS = 100
+
+#NUMBER_OF_ITERATIONS = 10000
+#NUMBER_OF_REFINE_ITERATIONS = 1000
 
 # Amplitudes
 diffraction_pattern_file = os.path.join(
     INPUT_DIR, 'particle_detected_intensity.h5')
 diffraction_pattern_raw = spimage.sp_image_read(diffraction_pattern_file, 0)
 amplitudes = spimage.sp_image_shift(diffraction_pattern_raw)
-amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image))
-#amplitudes.scaled = 1
-#amplitudes.phased = 0
-#amplitudes.shifted = 1
+
+# Hack around the sqrt invalid value crash
+adim = amplitudes.image.shape[0]
+amp_flat = amplitudes.image.flatten()
+amp_abs = numpy.abs(amp_flat)
+
+for i in range(len(amp_abs)):
+    try:
+        amp_abs[i] = numpy.sqrt(amp_abs[i])
+    except RuntimeWarning:
+        print i
+
+amplitudes.image[:] = amp_abs.reshape([adim, adim])
+# End hack
+
+# amplitudes.image[:] = numpy.sqrt(abs(amplitudes.image))
+# amplitudes.scaled = 1
+# amplitudes.phased = 0
+# amplitudes.shifted = 1
 
 support_file = os.path.join(INPUT_DIR, 'particle_support.h5')
 support_raw = spimage.sp_image_read(support_file, 0)
 support = spimage.sp_image_shift(support_raw)
+
 
 sup_alg_static = spimage_tools.support_static()  # Our support is static
 
@@ -35,8 +54,8 @@ sup_alg_static = spimage_tools.support_static()  # Our support is static
 # beta is a constant, 0.9, but in a format that spimage can read
 beta = spimage_tools.smap(0.9)
 
-#constraints = spimage.SpNoConstraints
-#constraints = spimage.SpPositiveComplexObject
+# constraints = spimage.SpNoConstraints
+# constraints = spimage.SpPositiveComplexObject
 # Additional constraints, other than Fourier-constraint or Real-constraint.
 constraints = spimage.SpPositiveRealObject
 
@@ -74,9 +93,8 @@ spimage.sp_image_write(
 ereal = spimage.sp_phaser_ereal(phaser)
 efourier = spimage.sp_phaser_efourier(phaser)
 
-filename = OUTPUT_DIR + \
-    'error.h5'
+filename = OUTPUT_DIR + '/error.h5'
 
-with h5py.File(filename, 'w') as file_handle:
+with h5py.File(filename, "w") as file_handle:
     file_handle.create_dataset('ereal', data=ereal)
     file_handle.create_dataset('efourier', data=efourier)
