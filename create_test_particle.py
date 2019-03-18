@@ -28,9 +28,9 @@ n_photons = 2500000
 # command line arguments
 output_dir = sys.argv[1]
 particle_id = sys.argv[2]
-particle_size = sys.argv[3]
-feature_size = sys.argv[4]
-
+particle_size = int(sys.argv[3])
+feature_size = int(sys.argv[4])
+array_size = particle_size + 5
 
 # Generating diffraction pattern
 particle = ElserParticle(array_size, particle_size, feature_size)
