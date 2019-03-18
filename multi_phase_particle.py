@@ -1,6 +1,6 @@
 #!/davinci/Cellar/Python/miniconda3/envs/py2/bin/python
 #SBATCH -p regular
-#SBATCH -N8
+#SBATCH -N1
 #SBATCH --gres=gpu:1
 #SBATCH --job-name=Phasing
 #SBATCH --ntasks=1
@@ -12,7 +12,7 @@ from eke import tools, shell_functions
 number_of_runs = 100
 particle = 'particle_001/'
 input_dir = '/scratch/fhgfs/elsin/test_particles/' + particle
-output_dir = input_dir + 'phasing_test/'
+output_dir = input_dir + 'phasing/'
 
 shell_functions.mkdir_p(output_dir)
 
