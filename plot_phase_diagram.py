@@ -1,4 +1,5 @@
-# Script to plot a phase diagram of particle, centered correctly
+# Script to plot a phase diagram of particle, with optional
+# fft shift if necessary
 
 import numpy as np
 import h5py as h5
@@ -7,7 +8,7 @@ import sys
 
 filename = str(sys.argv[1])
 shift = False
-if sys.argv[2]:
+if len(sys.argv) == 3:
     if sys.argv[2] == 'shift':
         shift = True
 
