@@ -29,14 +29,19 @@ if 'imag' in f.keys():
 else:
     intensity = real
 
-
+'''
 #plot with 'background' removed
 plt.imshow(intensity, vmin=20/1000., vmax=8900/1000., cmap='viridis')
 cmap = matplotlib.cm.viridis
 cmap.set_bad('grey',1.)
 cmap.set_under('white',1.)
+'''
 
-
+# plot log plots without background
+intensity = np.log(intensity)
+plt.imshow(intensity, vmin=0.001, vmax=10, cmap='viridis')
+cmap = matplotlib.cm.viridis
+cmap.set_under('white', 1.)
 
 
 plt.show()
