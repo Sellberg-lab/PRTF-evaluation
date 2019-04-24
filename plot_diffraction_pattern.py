@@ -42,6 +42,6 @@ intensity = np.log(intensity)
 plt.imshow(intensity, vmin=0.001, vmax=10, cmap='viridis')
 cmap = matplotlib.cm.viridis
 cmap.set_under('white', 1.)
+plt.savefig('particle_diffraction_pattern_log.svg', dpi=1000)
 
-
-plt.show()
+#plt.show()
