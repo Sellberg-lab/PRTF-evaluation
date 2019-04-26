@@ -10,10 +10,12 @@ import numpy as np
 # SETUP AND DETECTOR SETTINGS
 
 pattern_size_pixels = 1024
-detector_distance = 740.e-3 
+detector_distance = 400.e-3 
 detector_pixel_size = 75e-6
 wavelength = conversions.ev_to_m(1100) # ca 1.127 nm
-number_of_photons = 1e7
+#number_of_photons = 2.5e6
+number_of_photons = 1e9 #high
+#number_of_photons = 2.5e4 #low
 
 
 # Small angle approximation
@@ -37,9 +39,9 @@ should be relative to particle size (ie 0.2)
         self.particle_size = particle_size
         self.feature_size = feature_size
         self.particle_size_pixels = int(particle_size/real_space_pixel_size)
-        self.particle_feature_size_pixels = int(self.feature_size*particle_size)
+        self.particle_feature_size_pixels = int(self.feature_size*self.particle_size_pixels)
         self.array_size = self.particle_size_pixels + 2
-        self.particle = elser_particles.elser_particle(self.array_size, self.particle_size_pixels, self.particle_feature_size_pixels)
+        self.particle = elser_particles.elser_particle(self.array_size, self.particle_size_pixels, self.particle_feature_size_pixels, return_blured=True)
         self.settings = settings
 
     def generate_pattern(self):
