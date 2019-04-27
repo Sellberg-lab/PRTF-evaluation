@@ -7,7 +7,12 @@ import matplotlib.pyplot as plt
 import matplotlib
 import sys
 
-filename = str(sys.argv[1])
+target_dir = str(sys.argv[1])
+# Change filename to particle_diffracted_wave.h5
+# if you want 'true' diffraction pattern
+filename = target_dir + 'particle_detected_intensity.h5'
+
+# filename = str(sys.argv[1])
 shift = False
 if len(sys.argv) == 3:
     if sys.argv[2] == 'shift':
@@ -39,9 +44,9 @@ cmap.set_under('white',1.)
 
 # plot log plots without background
 intensity = np.log(intensity)
-plt.imshow(intensity, vmin=0.001, vmax=10, cmap='viridis')
+plt.imshow(intensity, vmin=0.001, vmax=15, cmap='viridis')
 cmap = matplotlib.cm.viridis
 cmap.set_under('white', 1.)
-plt.savefig('particle_diffraction_pattern_log.svg', dpi=1000)
+plt.savefig(target_dir + 'particle_diffraction_pattern_log.svg', dpi=1000)
 
 #plt.show()
