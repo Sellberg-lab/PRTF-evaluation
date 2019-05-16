@@ -14,7 +14,7 @@ particleList= ["particle_001","particle_002","particle_003","particle_004","part
 
 for i,particle in enumerate(particleList):
 
-    command1="python eke_plot_prtf_labeled.py "+ input_folder +particle+"/prtf/prtf -w 1.127 -d 400000 -p 75 -ol "+output_loc+particle
+    command1="python eke_plot_prtf_labeled.py "+ input_folder +particle+"/prtf/prtf -w 1.127 -d 400000 -p 75 -o "+output_loc+particle
     
     os.system(command1)
     

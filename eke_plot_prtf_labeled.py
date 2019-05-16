@@ -75,7 +75,7 @@ if __name__ == "__main__":
                       help="Distance from interaction region to detector. Unit must be the same as for the pixel size.")
     res.add_option("-p", action="store", type="float", dest="pixel_size",
                       help="Pixel size. Unit must be the same as for the detector distance.")
-    res.add_option("-ol", action="store", type="string", dest="output_loc",
+    res.add_option("-o", action="store", type="string", dest="output_loc",
                       help="Output file name. (string)")
     parser.add_option_group(res)
     parser.add_option("-n", action="store", type="int", dest="number",
