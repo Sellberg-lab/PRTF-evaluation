@@ -3,6 +3,7 @@ import sys,math
 from eke_plot_2d import *
 from optparse import OptionParser
 from optparse import OptionGroup
+import numpy as np
 
 
 class Setup:
@@ -94,6 +95,6 @@ if __name__ == "__main__":
         exit(1)
     plot_prtf(args[0],setup)
 #    pylab.show()
-    pylab.imsave(output_loc+"_prtf.png")
+    pylab.imsave(options.output_loc+"_prtf.png")
 
 

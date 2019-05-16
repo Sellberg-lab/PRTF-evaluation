@@ -6,9 +6,9 @@ Created on Thu May 16 11:27:35 2019
 """
 
 import os
-input_folder=/home/elsin/scratch/test_particles/
+input_folder="/home/elsin/scratch/test_particles/"
 
-output_loc=/home/alfredn/scratch/PRTFS/
+output_loc="/home/alfredn/scratch/PRTFS/"
 
 particleList= ["particle_001","particle_002","particle_003","particle_004","particle_005","particle_006","particle_007","particle_008","particle_009"]
 
