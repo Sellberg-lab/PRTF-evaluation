@@ -95,6 +95,6 @@ if __name__ == "__main__":
         exit(1)
     plot_prtf(args[0],setup)
 #    pylab.show()
-    pylab.imsave(options.output_loc+"_prtf.png")
+    pylab.savefig(options.output_loc+"_prtf.png")
 
 
