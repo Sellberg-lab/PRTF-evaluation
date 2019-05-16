@@ -58,7 +58,7 @@ def plot_prtf(filename,setup = 0):
 
     ax.set_xlabel(r'q $[nm^{-1}]$', fontsize=16)
     ax.set_ylabel('PRTF', fontsize=16)
-    ax.annotate('1/e', xy=(0, np.exp(-1)), xytext=(0, 1))
+    ax.annotate('1/e', xy=(0, np.exp(-1)), xytext=(0, np.exp(-1)))
 
     if setup.known:
         #pylab.text(setup.convert(data[0,-1]),0.95,
