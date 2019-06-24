@@ -11,6 +11,13 @@ python create_elser_particle.py {output directory} {particle id} {particle size 
 
 Creates a test particle in the folder /home/elsin/scrath/particles/particle_001/
 
+The outputs are in the form of hdf5 files containing the relevant particle data:
+
+particle_diffracted_wave.h5	 Fourier transform of the binary contrast matrix
+particle_detected_intensity.h5	 Poisson distribution using fourier amplitudes squared as lambda
+particle_support.h5		 A circular mask showing location of the particle
+particle_shape.hdf5		 Contains the binary contrast matrix, parameters
+
 ### Iterative phase retrieval
 Edit the file multi_phase_particle.py to set the number of independant retrievals, target particle, input and output directories.
 
