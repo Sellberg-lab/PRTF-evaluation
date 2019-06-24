@@ -1,26 +1,47 @@
 # PRTF-evaluation
 Scripts to evaluate the correctness of the phase-retrieval transfer function
 
+## Example
+### Create particle
+To change detector settings and photon count, edit the file particle_class.py. Class is imported by create_elser_particle.py and used to create test particles and save the data.
 
-## How to use
-###Create a test particle:
-Use the script test_particles.py to create a binary contrast test particle.
-The parameters of the particle and imaging conditions are set inside the script,
-such as particle size, feature size, detector settings. Run the script with the 
-output directory as a command line argument. A folder will be created based on
-the particle id specified in script. The outputs are in the form of hdf5 files 
-containing the relevant particle data:
+python create_elser_particle.py {output directory} {particle id} {particle size in m} {feature size as decimal}
 
-particle_diffracted_wave.h5	 Fourier transform of the binary contrast matrix
-particle_detected_intensity.h5	 Poisson distribution using fourier amplitudes squared as lambda
-particle_support.h5		 A circular mask showing location of the particle
-particle_shape.hdf5		 Contains the binary contrast matrix, parameters
+```python create_elser_particle.py /home/elsin/scratch/particles/ 001 450e-9 0.2```
+
+Creates a test particle in the folder /home/elsin/scrath/particles/particle_001/
+
+### Iterative phase retrieval
+Edit the file multi_phase_particle.py to set the number of independant retrievals, target particle, input and output directories.
+
+```sbatch multi_phase_particle.py```
+
+### Phase retrieval transfer function 
+Edit the file prtf.py to change input and output directories.
+
+```sbatch prtf.py```
+
+Plots of the PRTF were done using Tomas Ekeberg's Python Tools library.
+While in the output directory of the prtf.py file:
+
+```eke_plot_prtf.py prtf -w 1.127 -d 400000 -p 75```
+
+### True vs reconstructed PRTF
+Uses the prtf function from Hawk.
+
+prtf {output name} {target files}
+
+example from a subdirectory in the particle folder:
+
+```prtf prtf_true_vs_rec prtf-avg_image.h5 ../particle_real_space.h5```
+
+### Plotting
+To create the images used in the report, run the script master_plotter.py on a target test partcicle directory.
 
 example:
 
-python test_particles.py /home/elsin/scratch/test_particles/
+```python master_plotter.py /home/elsin/scratch/particles/particle_001/```
 
-Will result in a test particle at:
 
-/home/elsin/scratch/test_particles/particle_{particle_id}/
+
 
